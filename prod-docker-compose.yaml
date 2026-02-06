@@ -1,0 +1,58 @@
+services:
+  web-server:
+    restart: unless-stopped
+    build: 
+      context: .
+      dockerfile: ./nginx/Dockerfile
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - django_static:/app/django_static
+      - media:/app/media
+      - ./nginx/prod:/etc/nginx/conf.d
+      - /var/www/certbot:/var/www/certbot
+      - /etc/letsencrypt:/etc/letsencrypt
+    depends_on:
+      - api
+    networks:
+      - prowess_network
+    env_file:
+      - .fe.env
+
+  api:
+    restart: unless-stopped
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    expose:
+      - 8000
+    volumes:
+      - django_static:/app/django_static
+      - media:/app/media
+    entrypoint: /app/entrypoint.sh
+    depends_on:
+      - db
+    networks:
+      - prowess_network
+    env_file:
+      - .api.env
+
+  db:
+    image: postgres:15-bullseye
+    restart: unless-stopped
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    env_file:
+      - .db.env
+    networks:
+      - prowess_network
+
+volumes:
+  db_data:
+  django_static:
+  media:
+
+networks:
+  prowess_network:
+
