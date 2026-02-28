@@ -20,14 +20,17 @@ SECURE_PROXY_SSL_HEADER = tuple(
 ALLOWED_HOSTS = tuple(
     os.getenv("ALLOWED_HOSTS", f"localhost,127.0.0.1,0.0.0.0").split(",")
 )
-# CSRF_COOKIE_SECURE = bool(os.getenv("CSRF_COOKIE_SECURE", "False"))
-# SESSION_COOKIE_SECURE = bool(os.getenv("SESSION_COOKIE_SECURE", "False"))
+CSRF_COOKIE_SECURE = False #bool(os.getenv("CSRF_COOKIE_SECURE", "False"))
+SESSION_COOKIE_SECURE = False #bool(os.getenv("SESSION_COOKIE_SECURE", "False"))
 CORS_ALLOWED_ORIGINS = (
     "https://mathprowess.com",
     "https://www.mathprowess.com",
+    "http://app-alb-1194072423.ap-northeast-1.elb.amazonaws.com",
 )
+CSRF_TRUSTED_ORIGINS = [
+    "http://app-alb-1194072423.ap-northeast-1.elb.amazonaws.com",
+]
 
-print(DEBUG)
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -50,11 +53,18 @@ REST_FRAMEWORK = {
         "djangorestframework_camel_case.parser.CamelCaseMultiPartParser",
         "djangorestframework_camel_case.parser.CamelCaseJSONParser",
     ),
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication",
+    ],
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.AllowAny",
+    ],
 }
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -85,11 +95,11 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": os.getenv("POSTGRES_DB", "prowessdb"),
-        "USER": os.getenv("POSTGRES_USER", "doppio"),
-        "PASSWORD": os.getenv("POSTGRES_PASSWORD", "prowesspass"),
-        "HOST": os.getenv("POSTGRES_HOST", "localhost"),
-        "PORT": os.getenv("POSTGRES_PORT", "5432"),
+        "NAME": os.environ["POSTGRES_DB"],
+        "USER": os.environ["POSTGRES_USER"],
+        "PASSWORD": os.environ["POSTGRES_PASSWORD"],
+        "HOST": os.environ["POSTGRES_HOST"],
+        "PORT": os.environ.get("POSTGRES_PORT", "5432"),
     }
 }
 
@@ -120,6 +130,7 @@ USE_TZ = True
 
 STATIC_URL = "/django_static/"
 STATIC_ROOT = BASE_DIR / "django_static"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 

@@ -5,6 +5,8 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+from rest_framework.decorators import permission_classes
 
 from .models import Consultation, Prospect
 from .serializers import ConsultationSerializer, ProspectSerializer
@@ -32,7 +34,6 @@ class ProspectRetrieve(RetrieveAPIView):
     serializer_class = ProspectSerializer
 
 
-@csrf_exempt
 @api_view(["POST"])
 def create_consultation(request):
     payload = request.body.decode("utf-8")
