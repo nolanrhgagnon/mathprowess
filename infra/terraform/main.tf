@@ -95,28 +95,28 @@ resource "aws_lb_target_group_attachment" "app" {
   port = 80 
 }
 
-resource "aws_lb_listener" "http" {
-  load_balancer_arn = aws_lb.app_alb.arn
-  port = 80
-  protocol = "HTTP"
+#resource "aws_lb_listener" "http" {
+#  load_balancer_arn = aws_lb.app_alb.arn
+#  port = 80
+#  protocol = "HTTP"
 
-  default_action {
-    type = "forward"
-    target_group_arn = aws_lb_target_group.app_tg.arn
-  }
-}
+#  default_action {
+#    type = "forward"
+#    target_group_arn = aws_lb_target_group.app_tg.arn
+#  }
+#}
 
-resource "aws_lb_listener" "https" {
-  load_balancer_arn = aws_lb.app_alb.arn
-  port              = 443
-  protocol          = "HTTPS"
-  certificate_arn   = aws_acm_certificate.cert.arn
+#resource "aws_lb_listener" "https" {
+#  load_balancer_arn = aws_lb.app_alb.arn
+#  port              = 443
+#  protocol          = "HTTPS"
+#  certificate_arn   = aws_acm_certificate.cert.arn
 
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.app_tg.arn 
-  }
-}
+#  default_action {
+#    type             = "forward"
+#    target_group_arn = aws_lb_target_group.app_tg.arn 
+#  }
+#}
 
 resource "aws_iam_role" "ec2_role" {
   name = "ec2-ecr-role"
@@ -177,18 +177,22 @@ resource "aws_instance" "app" {
     }
 
     user_data = <<-EOF
-        #!/bin/bash
-        apt-get update -y
-        apt-get install -y docker.io awscli
-        systemctl start docker 
-        systemctl enable docker
-        usermod -aG docker ubuntu
-        aws ecr get-login-password --region ap-northeast-1 \
+      #!/bin/bash
+      apt-get update -y
+      apt-get install -y docker.io awscli
+      systemctl start docker 
+      systemctl enable docker
+      usermod -aG docker ubuntu
+
+      aws ecr get-login-password --region ap-northeast-1 \
         | docker login --username AWS --password-stdin ${data.aws_caller_identity.current.account_id}.dkr.ecr.ap-northeast-1.amazonaws.com
-        docker network create prowess-network
-        docker pull ${data.aws_caller_identity.current.account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/mp-api:latest
-        docker run -d --restart unless-stopped \
-        --name api --network prowess-network \
+
+      docker network create prowess-network || true
+
+      docker pull ${data.aws_caller_identity.current.account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/mp-api:latest
+      docker run -d --restart unless-stopped \
+        --name api \
+        --network prowess-network \
         -e POSTGRES_DB=prowessdb \
         -e POSTGRES_USER=appuser \
         -e POSTGRES_PASSWORD=supersecurepassword \
@@ -196,8 +200,55 @@ resource "aws_instance" "app" {
         -e POSTGRES_PORT=5432 \
         -e ALLOWED_HOSTS="app-alb-1194072423.ap-northeast-1.elb.amazonaws.com" \
         ${data.aws_caller_identity.current.account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/mp-api:latest
-        docker pull ${data.aws_caller_identity.current.account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/mp-web:latest
-        docker run -d --restart unless-stopped --network prowess-network -p 80:80 ${data.aws_caller_identity.current.account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/mp-web:latest
+
+      docker pull ${data.aws_caller_identity.current.account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/mp-web:latest
+      docker run -d --restart unless-stopped \
+        --name web \
+        --network prowess-network \
+        -p 80:80 \
+        ${data.aws_caller_identity.current.account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/mp-web:latest
+
+      # ---- Create deploy script for future updates ----
+      cat << 'DEPLOYEOF' > /home/ubuntu/deploy.sh
+      #!/bin/bash
+      set -e
+
+      IMAGE_TAG=\$1
+      ACCOUNT_ID=${data.aws_caller_identity.current.account_id}
+      REGION=ap-northeast-1
+      ECR_URL=\$ACCOUNT_ID.dkr.ecr.\$REGION.amazonaws.com
+
+      aws ecr get-login-password --region \$REGION \
+        | docker login --username AWS --password-stdin \$ECR_URL
+
+      docker pull \$ECR_URL/mp-api:\$IMAGE_TAG
+      docker pull \$ECR_URL/mp-web:\$IMAGE_TAG
+
+      docker stop api || true
+      docker rm api || true
+      docker stop web || true
+      docker rm web || true
+
+      docker run -d --restart unless-stopped \
+        --name api \
+        --network prowess-network \
+        -e POSTGRES_DB=prowessdb \
+        -e POSTGRES_USER=appuser \
+        -e POSTGRES_PASSWORD=supersecurepassword \
+        -e POSTGRES_HOST=${aws_db_instance.postgres.address} \
+        -e POSTGRES_PORT=5432 \
+        -e ALLOWED_HOSTS="app-alb-1194072423.ap-northeast-1.elb.amazonaws.com" \
+        \$ECR_URL/mp-api:\$IMAGE_TAG
+
+      docker run -d --restart unless-stopped \
+        --name web \
+        --network prowess-network \
+        -p 80:80 \
+        \$ECR_URL/mp-web:\$IMAGE_TAG
+      DEPLOYEOF
+
+      chmod +x /home/ubuntu/deploy.sh
+      chown ubuntu:ubuntu /home/ubuntu/deploy.sh
     EOF
 }
 
