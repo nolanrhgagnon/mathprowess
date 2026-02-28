@@ -30,6 +30,10 @@ jobs:
           docker build --platform=linux/amd64 -t api:${{ github.sha }} ./api
           docker tag api:${{ github.sha }} 638389535083.dkr.ecr.ap-northeast-1.amazonaws.com/api:${{ github.sha }}
 
+      - name: Create frontend env file
+        run: |
+          echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> web/fe/.env.production
+
       - name: Build Frontend image
         run: |
           docker build --platform=linux/amd64 -t frontend:${{ github.sha }} ./web
