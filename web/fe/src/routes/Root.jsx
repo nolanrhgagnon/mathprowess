@@ -9,7 +9,7 @@ axios.defaults.baseURL = API_BASE_URL;
 const Root = (props) => {
     console.log(API_BASE_URL);
     return (
-        <div className="flex flex-col min-h-screen bg-black">
+        <div className="flex flex-col min-h-screen bg-red">
             <Navigation />
             <main className="flex-1">
                 <Outlet />
