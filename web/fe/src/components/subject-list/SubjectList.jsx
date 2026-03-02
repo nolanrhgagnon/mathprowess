@@ -6,8 +6,8 @@ export default function SubjectList(props) {
             </h2>
             <ul>
                 {props.subjects.map((subject, index) => (
-                    <li className="mb-2 text-lg text-gray-300" key={index}>
-                        {subject}
+                    <li className="mb-2 text-lg text-gray-300 bg-zinc-900 rounded p-5" key={index}>
+                        🔵 <span className="ml-2">{subject}</span>
                     </li>
                 ))}
             </ul>

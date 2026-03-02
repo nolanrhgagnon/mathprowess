@@ -59,7 +59,7 @@ export default function ConsultationForm() {
                 <h2 className="text-3xl font-bold text-gray-300 mb-2">
                     Request a Free Consultation
                 </h2>
-                <p className="text-gray-600 mb-6">
+                <p className="text-gray-500 mb-6">
                     Fill out the form below and I'll get back to you soon.
                 </p>
 
@@ -105,8 +105,9 @@ export default function ConsultationForm() {
                                 className={`w-full font-mono px-4 
                                             py-2 border border-black 
                                             bg-neutral-900 text-white 
-                                            rounded-lg focus:ring-2 
-                                            focus:ring-blue-500 
+                                            rounded-lg ring-2 ring-blue-500 
+                                            focus:ring-2 
+                                            focus:ring-blue-200 
                                             focus:border-transparent 
                                             outline-none transition`}
                                 placeholder={input.placeholder}
@@ -130,8 +131,9 @@ export default function ConsultationForm() {
                                 className={`w-full font-mono px-4 
                                             py-2 border border-black 
                                             bg-neutral-900 text-white 
+                                            ring-2 ring-blue-500
                                             rounded-lg focus:ring-2 
-                                            focus:ring-blue-700 
+                                            focus:ring-blue-200 
                                             focus:border-transparent 
                                             outline-none transition resize-none`}
                                 placeholder="How can I help you?"
