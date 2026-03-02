@@ -4,7 +4,7 @@ import { customAlphabet } from 'nanoid';
 
 const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 10);
 
-const Consultation = (props) => {
+export default function ConsultationForm() {
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -14,30 +14,9 @@ const Consultation = (props) => {
     const [submitted, setSubmitted] = useState(false);
 
     const inputs = [
-        {
-            label: 'First Name',
-            type: 'text',
-            id: 'firstName',
-            name: 'firstName',
-            placeholder: 'Leonhard',
-            value: formData.firstName,
-        },
-        {
-            label: 'Last Name',
-            type: 'text',
-            id: 'lastName',
-            name: 'lastName',
-            placeholder: 'Euler',
-            value: formData.lastName,
-        },
-        {
-            label: 'Email',
-            type: 'email',
-            id: 'email',
-            name: 'email',
-            placeholder: 'leuler@innernette.com',
-            value: formData.email,
-        },
+        { label: "First Name", type: "text", id: "firstName", name: "firstName", placeholder: "Leonhard", value: formData.firstName },
+        { label: "Last Name", type: "text", id: "lastName", name: "lastName", placeholder: "Euler", value: formData.lastName },
+        { label: "Email", type: "email", id: "email", name: "email", placeholder: "leuler@innernette.com", value: formData.email },
     ];
 
     const handleChange = (e) => {
@@ -69,18 +48,13 @@ const Consultation = (props) => {
 
         // Reset form after 3 seconds
         setTimeout(() => {
-            setFormData({
-                firstName: '',
-                lastName: '',
-                email: '',
-                message: '',
-            });
+            setFormData({ firstName: '', lastName: '', email: '', message: '' });
             setSubmitted(false);
         }, 3000);
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center p-4">
+        <div className="flex-1 items-center justify-center p-4">
             <div className="max-w-md w-full">
                 <h2 className="text-3xl font-bold text-gray-300 mb-2">
                     Request a Free Consultation
@@ -114,31 +88,30 @@ const Consultation = (props) => {
                 ) : (
                     <div>
                         {inputs.map((input, n) => (
-                            <div className="mb-4">
-                                <label
-                                    htmlFor="name"
-                                    className="block text-gray-500 font-medium mb-2"
-                                >
-                                    {input.label}
-                                </label>
-                                <input
-                                    type={input.type}
-                                    id={input.id}
-                                    name={input.name}
-                                    value={input.value}
-                                    onChange={handleChange}
-                                    required
-                                    className={`w-full font-mono px-4 
+                        <div className="mb-4">
+                            <label
+                                htmlFor="name"
+                                className="block text-gray-500 font-medium mb-2"
+                            >
+                                {input.label} 
+                            </label>
+                            <input
+                                type={input.type}
+                                id={input.id}
+                                name={input.name}
+                                value={input.value}
+                                onChange={handleChange}
+                                required
+                                className={`w-full font-mono px-4 
                                             py-2 border border-black 
                                             bg-neutral-900 text-white 
                                             rounded-lg focus:ring-2 
                                             focus:ring-blue-500 
                                             focus:border-transparent 
                                             outline-none transition`}
-                                    placeholder={input.placeholder}
-                                />
-                            </div>
-                        ))}
+                                placeholder={input.placeholder}
+                            />
+                        </div>))}
 
                         <div className="mb-6">
                             <label
@@ -180,5 +153,3 @@ const Consultation = (props) => {
         </div>
     );
 };
-
-export default Consultation;

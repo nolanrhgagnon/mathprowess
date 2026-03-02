@@ -1,8 +1,5 @@
 const Tutorials = (props) => {
-    return (
-        <>
-        </>
-    );
+    return <></>;
 };
 
 export default Tutorials;
