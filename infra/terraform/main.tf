@@ -146,7 +146,7 @@ resource "aws_security_group" "app_sg" {
         from_port   = 22
         to_port     = 22
         protocol    = "tcp"
-        cidr_blocks = ["118.240.244.74/32"]
+        cidr_blocks = ["1.33.236.61/32"]
     }
 
     egress {
@@ -198,7 +198,7 @@ resource "aws_instance" "app" {
         -e POSTGRES_PASSWORD=supersecurepassword \
         -e POSTGRES_HOST=${aws_db_instance.postgres.address} \
         -e POSTGRES_PORT=5432 \
-        -e ALLOWED_HOSTS="app-alb-1194072423.ap-northeast-1.elb.amazonaws.com" \
+        -e ALLOWED_HOSTS="app-alb-1194072423.ap-northeast-1.elb.amazonaws.com,mathprowess.com" \
         ${data.aws_caller_identity.current.account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/mp-api:latest
 
       docker pull ${data.aws_caller_identity.current.account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/mp-web:latest
@@ -216,9 +216,9 @@ resource "aws_instance" "app" {
       IMAGE_TAG=\$1
       ACCOUNT_ID=${data.aws_caller_identity.current.account_id}
       REGION=ap-northeast-1
-      ECR_URL=\$ACCOUNT_ID.dkr.ecr.\$REGION.amazonaws.com
+      ECR_URL=$${ACCOUNT_ID}.dkr.ecr.$${REGION}.amazonaws.com
 
-      aws ecr get-login-password --region \$REGION \
+      aws ecr get-login-password --region $${REGION} \
         | docker login --username AWS --password-stdin \$ECR_URL
 
       docker pull \$ECR_URL/mp-api:\$IMAGE_TAG
@@ -237,7 +237,7 @@ resource "aws_instance" "app" {
         -e POSTGRES_PASSWORD=supersecurepassword \
         -e POSTGRES_HOST=${aws_db_instance.postgres.address} \
         -e POSTGRES_PORT=5432 \
-        -e ALLOWED_HOSTS="app-alb-1194072423.ap-northeast-1.elb.amazonaws.com" \
+        -e ALLOWED_HOSTS="app-alb-1194072423.ap-northeast-1.elb.amazonaws.com,mathprowess.com" \
         \$ECR_URL/mp-api:\$IMAGE_TAG
 
       docker run -d --restart unless-stopped \
