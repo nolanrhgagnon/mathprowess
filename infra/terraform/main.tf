@@ -1,3 +1,8 @@
+variable "myip" {
+  description = "IP Address of computer used to create this infra"
+  type = string
+}
+
 provider "aws" {
     region = "ap-northeast-1"
 }
@@ -146,7 +151,7 @@ resource "aws_security_group" "app_sg" {
         from_port   = 22
         to_port     = 22
         protocol    = "tcp"
-        cidr_blocks = ["1.33.236.61/32"]
+        cidr_blocks = ["${var.myip}/32"]
     }
 
     egress {
@@ -253,6 +258,10 @@ resource "aws_db_instance" "postgres" {
 
 output "public_ip" {
   value = aws_instance.app.public_ip 
+}
+
+output "instance_id" {
+  value = aws_instance.app.id
 }
 
 output "dns_validation_name" {
