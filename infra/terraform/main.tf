@@ -179,6 +179,7 @@ resource "aws_instance" "app" {
 
     tags = {
         Name = "MathProwess"
+        Role = "app-server"
     }
 
     user_data = <<-EOF
