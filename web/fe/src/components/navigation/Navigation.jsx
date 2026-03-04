@@ -1,3 +1,5 @@
+import { NavLink } from 'react-router-dom';
+
 export default function Navigation({ urls }) {
   return (
     <nav className="flex flex-row py-5 bg-slate-950 place-items-center">
@@ -8,7 +10,7 @@ export default function Navigation({ urls }) {
                 alt="Company Logo" 
                 className="h-14 w-auto"
               />
-              <span className="text-blue-500 text-2xl ml-4">Math Prowess</span>
+              <NavLink to={"/"} className="text-blue-500 text-2xl ml-4">Math Prowess</NavLink>
         </div>
         <img
             src="/cooler.png"
@@ -17,7 +19,7 @@ export default function Navigation({ urls }) {
         />
         <div className="flex flex-row ml-auto place-items-center justify-between mr-0 w-1/2">
             {urls.map((url, index) =>
-                <div className="cursor-pointer text-slate-500 hover:text-white">{url}</div> 
+                <NavLink to={`/${url.path}`} className="cursor-pointer text-slate-500 hover:text-white">{url.title}</NavLink> 
             )}
         </div>
       </div>
