@@ -11,11 +11,11 @@ export default function Navigation({ urls }) {
               <span className="text-blue-500 text-2xl ml-4">Math Prowess</span>
         </div>
         <img
-            src="/fractal.gif"
+            src="/cooler.png"
             alt="animation"
-            className="ml-4 h-16"
+            className="ml-20 h-16"
         />
-        <div className="flex flex-row ml-auto place-items-center justify-between mr-0 w-1/3">
+        <div className="flex flex-row ml-auto place-items-center justify-between mr-0 w-1/2">
             {urls.map((url, index) =>
                 <div className="cursor-pointer text-slate-500 hover:text-white">{url}</div> 
             )}
