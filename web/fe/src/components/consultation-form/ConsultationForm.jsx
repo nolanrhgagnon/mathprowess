@@ -56,13 +56,9 @@ export default function ConsultationForm() {
     return (
         <div className="flex-1 items-center justify-center p-4">
             <div className="max-w-md w-full">
-                <h2 className="text-3xl font-bold text-gray-300 mb-2">
+                <h2 className="text-2xl font-bold text-slate-400 mb-8">
                     Request a Free Consultation
                 </h2>
-                <p className="text-gray-500 mb-6">
-                    Fill out the form below and I'll get back to you soon.
-                </p>
-
                 {submitted ? (
                     <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-center">
                         <svg
@@ -91,7 +87,7 @@ export default function ConsultationForm() {
                         <div className="mb-4">
                             <label
                                 htmlFor="name"
-                                className="block text-gray-500 font-medium mb-2"
+                                className="block text-slate-500 font-medium mb-2"
                             >
                                 {input.label} 
                             </label>
@@ -104,10 +100,10 @@ export default function ConsultationForm() {
                                 required
                                 className={`w-full font-mono px-4 
                                             py-2 border border-black 
-                                            bg-neutral-900 text-white 
-                                            rounded-lg ring-2 ring-blue-500 
+                                            bg-slate-950 text-white 
+                                            rounded-lg ring-2 ring-blue-200 
                                             focus:ring-2 
-                                            focus:ring-blue-200 
+                                            focus:ring-blue-500 
                                             focus:border-transparent 
                                             outline-none transition`}
                                 placeholder={input.placeholder}
@@ -117,7 +113,7 @@ export default function ConsultationForm() {
                         <div className="mb-6">
                             <label
                                 htmlFor="message"
-                                className="block text-gray-500 font-medium mb-2"
+                                className="block text-slate-500 font-medium mb-2"
                             >
                                 Message
                             </label>
@@ -130,10 +126,10 @@ export default function ConsultationForm() {
                                 rows="4"
                                 className={`w-full font-mono px-4 
                                             py-2 border border-black 
-                                            bg-neutral-900 text-white 
-                                            ring-2 ring-blue-500
+                                            bg-slate-950 text-white 
+                                            ring-2 ring-blue-200
                                             rounded-lg focus:ring-2 
-                                            focus:ring-blue-200 
+                                            focus:ring-blue-500 
                                             focus:border-transparent 
                                             outline-none transition resize-none`}
                                 placeholder="How can I help you?"
@@ -142,9 +138,9 @@ export default function ConsultationForm() {
 
                         <button
                             onClick={handleSubmit}
-                            className={`w-full bg-neutral-600 text-white 
+                            className={`w-full bg-slate-800 text-white 
                                         font-semibold py-3 my-3 rounded-lg 
-                                        hover:bg-blue-500 transition duration-200 
+                                        hover:bg-yellow-500 transition duration-200 
                                         shadow-md hover:shadow-lg cursor-pointer`}
                         >
                             Submit
