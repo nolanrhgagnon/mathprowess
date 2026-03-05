@@ -6,6 +6,7 @@ import Consultation from './routes/Consultation';
 import Testimonials from './routes/Testimonials';
 import Tutorials from './routes/Tutorials';
 import About from './routes/About';
+import Merchandise from './routes/Merchandise';
 import Root from './routes/Root';
 import './index.css';
 
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
             {
                 path: 'about',
                 element: <About />,
+            },
+            {
+                path: 'merchandise',
+                element: <Merchandise />,
             },
         ],
     },

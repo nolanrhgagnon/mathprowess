@@ -4,6 +4,8 @@ const Testimonials = (props) => {
     const testimonials = [
         { author: 'Dolphin Lord', quote: 'Taught me some cool shit.' },
         { author: 'Mr Bangs', quote: 'Kindness matters, bruv.' },
+        { author: 'Z', quote: 'Hell yeah' },
+        { author: 'Misho', quote: 'Mish yeah!' },
     ];
     return (
         <div className="min-h-screen flex justify-center px-4 py-24">
