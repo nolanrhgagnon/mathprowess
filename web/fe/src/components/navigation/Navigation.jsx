@@ -1,27 +1,70 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
+import { useState } from "react";
 
 export default function Navigation({ urls }) {
+  const [open, setOpen] = useState(false);
+
   return (
-    <nav className="flex flex-row py-5 bg-slate-950 place-items-center">
-      <div className="flex flex-row flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center place-items-center h-16">
-              <img 
-                src="/icon_no_bg.svg" 
-                alt="Company Logo" 
-                className="h-14 w-auto"
-              />
-              <NavLink to={"/"} className="text-blue-500 text-2xl ml-4">Math Prowess</NavLink>
+    <nav className="bg-slate-950">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        {/* Top bar */}
+        <div className="flex items-center justify-between h-16">
+
+          {/* Logo + title */}
+          <div className="flex items-center">
+            <img
+              src="/icon_no_bg.svg"
+              alt="Company Logo"
+              className="h-10 w-auto"
+            />
+
+            <NavLink
+              to="/"
+              className="text-blue-500 text-xl ml-3 font-thin"
+            >
+              Math Prowess
+            </NavLink>
+          </div>
+
+          {/* Desktop nav */}
+          <div className="hidden md:flex items-center space-x-8">
+            {urls.map((url) => (
+              <NavLink
+                key={url.path}
+                to={`/${url.path}`}
+                className="text-slate-400 hover:text-white"
+              >
+                {url.title}
+              </NavLink>
+            ))}
+          </div>
+
+          {/* Mobile hamburger */}
+          <button
+            onClick={() => setOpen(!open)}
+            className="md:hidden text-slate-300 hover:text-white"
+          >
+            ☰
+          </button>
         </div>
-        <img
-            src="/cooler.png"
-            alt="animation"
-            className="ml-20 h-16"
-        />
-        <div className="flex flex-row ml-auto place-items-center justify-between mr-0 w-1/2">
-            {urls.map((url, index) =>
-                <NavLink to={`/${url.path}`} className="cursor-pointer text-slate-500 hover:text-white">{url.title}</NavLink> 
-            )}
-        </div>
+
+        {/* Mobile menu */}
+        {open && (
+          <div className="md:hidden flex flex-col space-y-4 pb-6">
+            {urls.map((url) => (
+              <NavLink
+                key={url.path}
+                to={`/${url.path}`}
+                className="text-slate-400 hover:text-white"
+                onClick={() => setOpen(false)}
+              >
+                {url.title}
+              </NavLink>
+            ))}
+          </div>
+        )}
+
       </div>
     </nav>
   );
