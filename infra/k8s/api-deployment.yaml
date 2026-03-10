@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api 
+spec:
+  replicas: 2
+  selector: 
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+        - name: api
+          image: 638389535083.dkr.ecr.ap-northeast-1.amazonaws.com/mp-api:7e0c313cfef6e7ec4b6c8f8cf0fbc05dcca18c17 
+          ports:
+            - containerPort: 8000
+          env:
+            - name: POSTGRES_HOST
+              value: app-postgres.cvmmkw4imkne.ap-northeast-1.rds.amazonaws.com
+            - name: POSTGRES_USER
+              value: appuser
+            - name: POSTGRES_PASSWORD
+              value: supersecurepassword
+            - name: POSTGRES_DB
+              value: prowessdb
+            - name: POSTGRES_PORT
+              value: "5432"
