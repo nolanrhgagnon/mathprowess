@@ -1,0 +1,40 @@
+services:
+  web:
+    restart: unless-stopped
+    image: $${ECR_URL}/mp-web:$${IMAGE_TAG}
+    ports:
+      - 80:80
+    volumes:
+      - django_static:/app/django_static
+      - media:/app/media
+      - ./nginx/prod:/etc/nginx/conf.d
+    depends_on:
+      - api
+    networks:
+      - prowess_network
+    env_file:
+      - .fe.env
+
+  api:
+    restart: unless-stopped
+    image: $${ECR_URL}/mp-api:$${IMAGE_TAG}
+    volumes:
+      - django_static:/app/django_static
+      - media:/app/media
+    networks:
+      - prowess_network
+    environment:
+      POSTGRES_DB: prowessdb
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: supersecurepassword
+      POSTGRES_HOST: $${POSTGRES_HOST} 
+      POSTGRES_PORT: 5432
+      ALLOWED_HOSTS: "app-alb-1194072423.ap-northeast-1.elb.amazonaws.com,mathprowess.com"
+
+volumes:
+  db_data:
+  django_static:
+  media:
+
+networks:
+  prowess_network:

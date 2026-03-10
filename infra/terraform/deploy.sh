@@ -3,8 +3,6 @@ set -e
 
 IMAGE_TAG="$1"
 
-# These must already be set in the environment
-# or you can hardcode them here
 ACCOUNT_ID="${account_id}"
 REGION="ap-northeast-1"
 POSTGRES_HOST="${postgres_host}"
@@ -22,19 +20,23 @@ docker rm api || true
 docker stop web || true
 docker rm web || true
 
-docker run -d --restart unless-stopped \
-  --name api \
-  --network prowess-network \
-  -e POSTGRES_DB=prowessdb \
-  -e POSTGRES_USER=appuser \
-  -e POSTGRES_PASSWORD=supersecurepassword \
-  -e POSTGRES_HOST="$POSTGRES_HOST" \
-  -e POSTGRES_PORT=5432 \
-  -e ALLOWED_HOSTS="app-alb-1194072423.ap-northeast-1.elb.amazonaws.com,mathprowess.com" \
-  "$ECR_URL/mp-api:$IMAGE_TAG"
+export POSTGRES_HOST, ECR_URL, IMAGE_TAG
 
-docker run -d --restart unless-stopped \
-  --name web \
-  --network prowess-network \
-  -p 80:80 \
-  "$ECR_URL/mp-web:$IMAGE_TAG"
+docker compose up -d
+
+#docker run -d --restart unless-stopped \
+#  --name api \
+#  --network prowess-network \
+#  -e POSTGRES_DB=prowessdb \
+#  -e POSTGRES_USER=appuser \
+#  -e POSTGRES_PASSWORD=supersecurepassword \
+#  -e POSTGRES_HOST="$POSTGRES_HOST" \
+#  -e POSTGRES_PORT=5432 \
+#  -e ALLOWED_HOSTS="app-alb-1194072423.ap-northeast-1.elb.amazonaws.com,mathprowess.com" \
+#  "$ECR_URL/mp-api:$IMAGE_TAG"
+#
+#docker run -d --restart unless-stopped \
+#  --name web \
+#  --network prowess-network \
+#  -p 80:80 \
+#  "$ECR_URL/mp-web:$IMAGE_TAG"

@@ -55,7 +55,17 @@ resource "aws_instance" "app" {
     user_data = <<-EOF
       #!/bin/bash
       apt-get update -y
-      apt-get install -y docker.io awscli
+      apt-get install -y awscli
+      apt install ca-certificates curl gnupg -y
+      sudo install -m 0755 -d /etc/apt/keyrings
+      curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+      sudo chmod a+r /etc/apt/keyrings/docker.gpg
+      echo \
+        "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+        $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+        sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+      apt update
+      sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
       systemctl start docker 
       systemctl enable docker
       usermod -aG docker ubuntu
@@ -93,6 +103,15 @@ resource "aws_instance" "app" {
 
       chmod +x /home/ubuntu/deploy.sh
       chown ubuntu:ubuntu /home/ubuntu/deploy.sh
+
+      cat << 'DEPLOYEOF' > /home/ubuntu/prod-docker-compose.yaml
+      ${templatefile("${path.module}/prod-docker-compose.yaml", {
+      })}
+      DEPLOYEOF
+
+      chmod +x /home/ubuntu/prod-docker-compose.yaml
+      chown ubuntu:ubuntu /home/ubuntu/prod-docker-compose.yaml
+
     EOF
 }
 
