@@ -56,7 +56,7 @@ jobs:
           COMMAND_ID=$(aws ssm send-command \
             --targets "Key=tag:Role,Values=app-server" \
             --document-name "AWS-RunShellScript" \
-            --parameters '{"commands":["bash /home/ubuntu/deploy.sh ${{ github.sha }}"]}' \
+            --parameters '{"commands":["bash /home/ubuntu/deploy.sh ${{ github.sha }} >> error.log"]}' \
             --query "Command.CommandId" \
             --output text)
 
