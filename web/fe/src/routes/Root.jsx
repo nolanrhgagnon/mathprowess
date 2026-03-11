@@ -13,7 +13,7 @@ const Root = (props) => {
         { title: 'Merchandise', path: 'merchandise' },
     ];
     return (
-        <div className="flex flex-col min-h-screen bg-red-900">
+        <div className="flex flex-col min-h-screen bg-green-900">
             <Navigation urls={urls} />
             <main className="flex-1 mt-6">
                 <Outlet />
