@@ -7,7 +7,6 @@ services:
     volumes:
       - django_static:/app/django_static
       - media:/app/media
-      - ./nginx/prod:/etc/nginx/conf.d
     depends_on:
       - api
     networks:
@@ -31,8 +30,14 @@ services:
       POSTGRES_PORT: 5432
       ALLOWED_HOSTS: "app-alb-1194072423.ap-northeast-1.elb.amazonaws.com,mathprowess.com"
 
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - ./monitoring/prometheus.yaml:/etc/prometheus/prometheus.yaml
+
 volumes:
-  db_data:
   django_static:
   media:
 
