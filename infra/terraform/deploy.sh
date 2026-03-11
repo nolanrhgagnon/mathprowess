@@ -16,10 +16,10 @@ docker pull "$ECR_URL/mp-api:$IMAGE_TAG"
 docker pull "$ECR_URL/mp-web:$IMAGE_TAG"
 docker pull "$ECR_URL/mp-prom:$IMAGE_TAG"
 
-docker compose -f ./prod-docker-compose.yaml down
+docker compose -f /home/ubuntu/prod-docker-compose.yaml down
 
 export POSTGRES_HOST=$POSTGRES_HOST
 export ECR_URL=$ECR_URL
 export IMAGE_TAG=$IMAGE_TAG
 
-docker compose -f ./prod-docker-compose.yaml up -d
+docker compose -f /home/ubuntu/prod-docker-compose.yaml up -d

@@ -1,7 +1,7 @@
 services:
   web:
     restart: unless-stopped
-    image: ${ECR_URL}/mp-web:${IMAGE_TAG}
+    image: $${ECR_URL}/mp-web:$${IMAGE_TAG}
     ports:
       - 80:80
     volumes:
@@ -16,7 +16,7 @@ services:
 
   api:
     restart: unless-stopped
-    image: ${ECR_URL}/mp-api:${IMAGE_TAG}
+    image: $${ECR_URL}/mp-api:$${IMAGE_TAG}
     volumes:
       - django_static:/app/django_static
       - media:/app/media
@@ -26,12 +26,12 @@ services:
       POSTGRES_DB: prowessdb
       POSTGRES_USER: appuser
       POSTGRES_PASSWORD: supersecurepassword
-      POSTGRES_HOST: ${POSTGRES_HOST} 
+      POSTGRES_HOST: $${POSTGRES_HOST} 
       POSTGRES_PORT: 5432
       ALLOWED_HOSTS: "app-alb-1194072423.ap-northeast-1.elb.amazonaws.com,mathprowess.com"
 
   prometheus:
-    image: ${ECR_URL}/mp-prom:${IMAGE_TAG} 
+    image: $${ECR_URL}/mp-prom:$${IMAGE_TAG} 
     ports:
       - "9090:9090"
     networks:
