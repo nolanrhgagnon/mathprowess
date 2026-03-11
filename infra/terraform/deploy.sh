@@ -14,29 +14,15 @@ aws ecr get-login-password --region "$REGION" \
 
 docker pull "$ECR_URL/mp-api:$IMAGE_TAG"
 docker pull "$ECR_URL/mp-web:$IMAGE_TAG"
+docker pull "$ECR_URL/mp-prom:$IMAGE_TAG"
 
 docker stop api || true
 docker rm api || true
 docker stop web || true
 docker rm web || true
+docker stop prometheus || true
+docker rm prometheus || true
 
 export POSTGRES_HOST, ECR_URL, IMAGE_TAG
 
 docker compose up -d
-
-#docker run -d --restart unless-stopped \
-#  --name api \
-#  --network prowess-network \
-#  -e POSTGRES_DB=prowessdb \
-#  -e POSTGRES_USER=appuser \
-#  -e POSTGRES_PASSWORD=supersecurepassword \
-#  -e POSTGRES_HOST="$POSTGRES_HOST" \
-#  -e POSTGRES_PORT=5432 \
-#  -e ALLOWED_HOSTS="app-alb-1194072423.ap-northeast-1.elb.amazonaws.com,mathprowess.com" \
-#  "$ECR_URL/mp-api:$IMAGE_TAG"
-#
-#docker run -d --restart unless-stopped \
-#  --name web \
-#  --network prowess-network \
-#  -p 80:80 \
-#  "$ECR_URL/mp-web:$IMAGE_TAG"
