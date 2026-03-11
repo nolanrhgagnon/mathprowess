@@ -16,13 +16,10 @@ docker pull "$ECR_URL/mp-api:$IMAGE_TAG"
 docker pull "$ECR_URL/mp-web:$IMAGE_TAG"
 docker pull "$ECR_URL/mp-prom:$IMAGE_TAG"
 
-docker stop api || true
-docker rm api || true
-docker stop web || true
-docker rm web || true
-docker stop prometheus || true
-docker rm prometheus || true
+docker compose -f ./prod-docker-compose.yaml down
 
-export POSTGRES_HOST, ECR_URL, IMAGE_TAG
+export POSTGRES_HOST=$POSTGRES_HOST
+export ECR_URL=$ECR_URL
+export IMAGE_TAG=$IMAGE_TAG
 
-docker compose up -d
+docker compose -f ./prod-docker-compose.yaml up -d
