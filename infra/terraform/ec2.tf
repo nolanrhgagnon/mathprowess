@@ -75,24 +75,9 @@ resource "aws_instance" "app" {
 
       docker network create prowess-network || true
 
-      docker pull ${data.aws_caller_identity.current.account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/mp-api:latest
-      docker run -d --restart unless-stopped \
-        --name api \
-        --network prowess-network \
-        -e POSTGRES_DB=prowessdb \
-        -e POSTGRES_USER=appuser \
-        -e POSTGRES_PASSWORD=supersecurepassword \
-        -e POSTGRES_HOST=${aws_db_instance.postgres.address} \
-        -e POSTGRES_PORT=5432 \
-        -e ALLOWED_HOSTS="app-alb-1194072423.ap-northeast-1.elb.amazonaws.com,mathprowess.com" \
-        ${data.aws_caller_identity.current.account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/mp-api:latest
-
-      docker pull ${data.aws_caller_identity.current.account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/mp-web:latest
-      docker run -d --restart unless-stopped \
-        --name web \
-        --network prowess-network \
-        -p 80:80 \
-        ${data.aws_caller_identity.current.account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/mp-web:latest
+      docker pull ${data.aws_caller_identity.current.account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/mp-api:45671716a7ed91756872102419164ba42d94e653
+      docker pull ${data.aws_caller_identity.current.account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/mp-web:45671716a7ed91756872102419164ba42d94e653
+      docker pull ${data.aws_caller_identity.current.account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/mp-prom:45671716a7ed91756872102419164ba42d94e653
 
       cat << 'DEPLOYEOF' > /home/ubuntu/deploy.sh
       ${templatefile("${path.module}/deploy.sh", {
@@ -111,6 +96,13 @@ resource "aws_instance" "app" {
 
       chmod +x /home/ubuntu/prod-docker-compose.yaml
       chown ubuntu:ubuntu /home/ubuntu/prod-docker-compose.yaml
+      touch /home/ubuntu/.fe.env
+
+      export ECR_URL=${data.aws_caller_identity.current.account_id}.dkr.ecr.ap-northeast-1.amazonaws.com
+      export IMAGE_TAG=45671716a7ed91756872102419164ba42d94e653
+      export POSTGRES_HOST=${aws_db_instance.postgres.address}
+
+      docker compose -f /home/ubuntu/prod-docker-compose.yaml up -d
 
     EOF
 }
