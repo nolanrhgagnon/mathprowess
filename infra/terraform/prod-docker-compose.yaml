@@ -1,5 +1,6 @@
 services:
   web:
+    container_name: web
     restart: unless-stopped
     image: $${ECR_URL}/mp-web:$${IMAGE_TAG}
     ports:
@@ -15,6 +16,7 @@ services:
       - .fe.env
 
   api:
+    container_name: api
     restart: unless-stopped
     image: $${ECR_URL}/mp-api:$${IMAGE_TAG}
     volumes:
@@ -31,6 +33,7 @@ services:
       ALLOWED_HOSTS: "app-alb-1194072423.ap-northeast-1.elb.amazonaws.com,mathprowess.com"
 
   prometheus:
+    container_name: prom
     image: $${ECR_URL}/mp-prom:$${IMAGE_TAG} 
     ports:
       - "9090:9090"
@@ -38,6 +41,7 @@ services:
       - prowess_network
 
   grafana:
+    container_name: grafana
     image: grafana/grafana
     restart: unless-stopped
     ports:
@@ -48,6 +52,7 @@ services:
       - prowess_network
 
   node_exporter:
+    container_name: nodex
     image: prom/node-exporter
     restart: unless-stopped
     ports:
