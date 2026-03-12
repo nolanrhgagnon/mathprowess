@@ -56,7 +56,7 @@ export default function ConsultationForm() {
     return (
         <div className="flex-1 items-center justify-center p-4">
             <div className="max-w-md w-full">
-                <h2 className="text-2xl font-bold text-slate-400 mb-8">
+                <h2 className="text-2xl font-bold text-indigo-400 mb-8">
                     Request a Free Consultation
                 </h2>
                 {submitted ? (
@@ -87,7 +87,7 @@ export default function ConsultationForm() {
                         <div className="mb-4">
                             <label
                                 htmlFor="name"
-                                className="block text-slate-500 font-medium mb-2"
+                                className="block text-indigo-500 font-medium mb-2"
                             >
                                 {input.label} 
                             </label>
@@ -100,7 +100,7 @@ export default function ConsultationForm() {
                                 required
                                 className={`w-full font-mono px-4 
                                             py-2 border border-black 
-                                            bg-slate-950 text-white 
+                                            bg-indigo-950 text-white 
                                             rounded-lg ring-2 ring-blue-200 
                                             focus:ring-2 
                                             focus:ring-blue-500 
@@ -113,7 +113,7 @@ export default function ConsultationForm() {
                         <div className="mb-6">
                             <label
                                 htmlFor="message"
-                                className="block text-slate-500 font-medium mb-2"
+                                className="block text-indigo-500 font-medium mb-2"
                             >
                                 Message
                             </label>
@@ -126,7 +126,7 @@ export default function ConsultationForm() {
                                 rows="4"
                                 className={`w-full font-mono px-4 
                                             py-2 border border-black 
-                                            bg-slate-950 text-white 
+                                            bg-indigo-950 text-white 
                                             ring-2 ring-blue-200
                                             rounded-lg focus:ring-2 
                                             focus:ring-blue-500 
@@ -138,7 +138,7 @@ export default function ConsultationForm() {
 
                         <button
                             onClick={handleSubmit}
-                            className={`w-full bg-slate-800 text-white 
+                            className={`w-full bg-indigo-800 text-white 
                                         font-semibold py-3 my-3 rounded-lg 
                                         hover:bg-yellow-500 transition duration-200 
                                         shadow-md hover:shadow-lg cursor-pointer`}

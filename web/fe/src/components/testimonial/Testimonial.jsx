@@ -7,7 +7,7 @@ export default function Testimonial({ author, quote }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4 }}
-            className="bg-slate-950 rounded-2xl shadow-xl p-10 md:p-12"
+            className="bg-indigo-950 rounded-2xl shadow-xl p-10 md:p-12"
         >
             <p className="text-xl md:text-2xl leading-relaxed text-yellow-800 mb-8">
                 “{quote}”

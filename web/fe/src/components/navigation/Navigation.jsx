@@ -5,7 +5,7 @@ export default function Navigation({ urls }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="bg-slate-950">
+    <nav className="bg-indigo-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Top bar */}
@@ -33,7 +33,7 @@ export default function Navigation({ urls }) {
               <NavLink
                 key={url.path}
                 to={`/${url.path}`}
-                className="text-slate-400 hover:text-white"
+                className="text-indigo-400 hover:text-white"
               >
                 {url.title}
               </NavLink>
@@ -43,7 +43,7 @@ export default function Navigation({ urls }) {
           {/* Mobile hamburger */}
           <button
             onClick={() => setOpen(!open)}
-            className="md:hidden text-slate-300 hover:text-white"
+            className="md:hidden text-indigo-300 hover:text-white"
           >
             ☰
           </button>
@@ -56,7 +56,7 @@ export default function Navigation({ urls }) {
               <NavLink
                 key={url.path}
                 to={`/${url.path}`}
-                className="text-slate-400 hover:text-white"
+                className="text-indigo-400 hover:text-white"
                 onClick={() => setOpen(false)}
               >
                 {url.title}
