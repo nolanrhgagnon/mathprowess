@@ -2,7 +2,6 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './routes/Home';
-import Consultation from './routes/Consultation';
 import Testimonials from './routes/Testimonials';
 import Tutorials from './routes/Tutorials';
 import About from './routes/About';
@@ -14,15 +13,11 @@ const router = createBrowserRouter([
     {
         path: '/',
         element: <Root />,
-        errorElement: <div>Error Page</div>,
+        errorElement: <Root />,
         children: [
             {
                 path: '',
                 element: <Home />,
-            },
-            {
-                path: 'consultation',
-                element: <Consultation />,
             },
             {
                 path: 'testimonials',
