@@ -5,13 +5,11 @@ export default function Navigation({ urls }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="bg-indigo-950">
+    <nav className="p-5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Top bar */}
         <div className="flex items-center justify-between h-16">
 
-          {/* Logo + title */}
           <div className="flex items-center">
             <img
               src="/icon_no_bg.svg"
@@ -21,26 +19,24 @@ export default function Navigation({ urls }) {
 
             <NavLink
               to="/"
-              className="text-blue-500 text-xl ml-3 font-thin"
+              className="text-white text-lg ml-6 font-thin"
             >
               Math Prowess
             </NavLink>
           </div>
 
-          {/* Desktop nav */}
           <div className="hidden md:flex items-center space-x-8">
             {urls.map((url) => (
               <NavLink
                 key={url.path}
                 to={`/${url.path}`}
-                className="text-indigo-400 hover:text-white"
+                className="font-thin text-white hover:text-purple-400"
               >
                 {url.title}
               </NavLink>
             ))}
           </div>
 
-          {/* Mobile hamburger */}
           <button
             onClick={() => setOpen(!open)}
             className="md:hidden text-indigo-300 hover:text-white"
@@ -49,14 +45,13 @@ export default function Navigation({ urls }) {
           </button>
         </div>
 
-        {/* Mobile menu */}
         {open && (
           <div className="md:hidden flex flex-col space-y-4 pb-6">
             {urls.map((url) => (
               <NavLink
                 key={url.path}
                 to={`/${url.path}`}
-                className="text-indigo-400 hover:text-white"
+                className="text-indigo-200 hover:text-white"
                 onClick={() => setOpen(false)}
               >
                 {url.title}
