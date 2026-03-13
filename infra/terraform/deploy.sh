@@ -15,6 +15,7 @@ aws ecr get-login-password --region "$REGION" \
 docker pull "$ECR_URL/mp-api:$IMAGE_TAG"
 docker pull "$ECR_URL/mp-web:$IMAGE_TAG"
 docker pull "$ECR_URL/mp-prom:$IMAGE_TAG"
+docker pull "$ECR_URL/mp-graf:$IMAGE_TAG"
 
 docker compose -f /home/ubuntu/prod-docker-compose.yaml down
 

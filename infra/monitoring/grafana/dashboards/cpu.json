@@ -1,0 +1,13 @@
+{
+  "panels": [
+    {
+      "title": "CPU Usage",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "100 - (avg(rate(node_cpu_seconds_total{mode=\"idle\"}[1m])) * 100)"
+        }
+      ]
+    }
+  ]
+}
