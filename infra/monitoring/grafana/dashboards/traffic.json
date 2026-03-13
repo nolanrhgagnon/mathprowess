@@ -1,0 +1,13 @@
+{
+  "panels": [
+    {
+      "title": "Network Traffic",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "rate(node_network_receive_bytes_total[1m])"
+        }
+      ]
+    }
+  ]
+}
