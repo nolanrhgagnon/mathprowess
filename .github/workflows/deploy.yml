@@ -41,14 +41,20 @@ jobs:
 
       - name: Build Prometheus image
         run: |
-          docker build --platform=linux/amd64 -t prometheus:${{ github.sha }} ./infra/monitoring
+          docker build --platform=linux/amd64 -t prometheus:${{ github.sha }} ./infra/monitoring/prometheus
           docker tag prometheus:${{ github.sha }} 638389535083.dkr.ecr.ap-northeast-1.amazonaws.com/mp-prom:${{ github.sha }}
+
+      - name: Build Grafana image
+        run: |
+          docker build --platform=linux/amd64 -t grafana:${{ github.sha }} ./infra/monitoring/grafana
+          docker tag grafana:${{ github.sha }} 638389535083.dkr.ecr.ap-northeast-1.amazonaws.com/mp-graf:${{ github.sha }}
 
       - name: Push images
         run: | 
           docker push 638389535083.dkr.ecr.ap-northeast-1.amazonaws.com/mp-api:${{ github.sha }}
           docker push 638389535083.dkr.ecr.ap-northeast-1.amazonaws.com/mp-web:${{ github.sha }}
           docker push 638389535083.dkr.ecr.ap-northeast-1.amazonaws.com/mp-prom:${{ github.sha }}
+          docker push 638389535083.dkr.ecr.ap-northeast-1.amazonaws.com/mp-graf:${{ github.sha }}
 
     
       - name: Deploy via SSM
