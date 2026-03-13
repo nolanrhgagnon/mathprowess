@@ -42,7 +42,7 @@ services:
 
   grafana:
     container_name: grafana
-    image: grafana/grafana
+    image: $${ECR_URL}/mp-graf:$${IMAGE_TAG} 
     restart: unless-stopped
     ports:
       - "3000:3000"
