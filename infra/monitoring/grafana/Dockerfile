@@ -1,2 +1,3 @@
 FROM grafana/grafana
-COPY ./dashboards/ /etc/grafana/provisioning/dashboards/
+COPY ./test.yaml /etc/grafana/provisioning/dashboards/
+COPY ./dashboards/ /var/lib/grafana/dashboards/
