@@ -75,10 +75,10 @@ resource "aws_instance" "app" {
 
       docker network create prowess-network || true
 
-      docker pull ${data.aws_caller_identity.current.account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/mp-api:edf387c4b48e0e416a9df0f8003cf0d098e06faa
-      docker pull ${data.aws_caller_identity.current.account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/mp-web:edf387c4b48e0e416a9df0f8003cf0d098e06faa
-      docker pull ${data.aws_caller_identity.current.account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/mp-prom:edf387c4b48e0e416a9df0f8003cf0d098e06faa
-      docker pull ${data.aws_caller_identity.current.account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/mp-graf:edf387c4b48e0e416a9df0f8003cf0d098e06faa
+      docker pull ${data.aws_caller_identity.current.account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/mp-api:337d73c4448110b88f2084f54ed796148dc428e0
+      docker pull ${data.aws_caller_identity.current.account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/mp-web:337d73c4448110b88f2084f54ed796148dc428e0
+      docker pull ${data.aws_caller_identity.current.account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/mp-prom:337d73c4448110b88f2084f54ed796148dc428e0
+      docker pull ${data.aws_caller_identity.current.account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/mp-graf:337d73c4448110b88f2084f54ed796148dc428e0
 
       cat << 'DEPLOYEOF' > /home/ubuntu/deploy.sh
       ${templatefile("${path.module}/deploy.sh", {
@@ -100,7 +100,7 @@ resource "aws_instance" "app" {
       touch /home/ubuntu/.fe.env
 
       export ECR_URL=${data.aws_caller_identity.current.account_id}.dkr.ecr.ap-northeast-1.amazonaws.com
-      export IMAGE_TAG=edf387c4b48e0e416a9df0f8003cf0d098e06faa
+      export IMAGE_TAG=337d73c4448110b88f2084f54ed796148dc428e0
       export POSTGRES_HOST=${aws_db_instance.postgres.address}
 
       docker compose -f /home/ubuntu/prod-docker-compose.yaml up -d
