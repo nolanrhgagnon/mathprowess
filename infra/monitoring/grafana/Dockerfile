@@ -1,2 +1,2 @@
 FROM grafana/grafana
-COPY ./test.txt /etc/grafana/provisioning
+COPY ./dashboards/ /etc/grafana/provisioning/dashboards/
