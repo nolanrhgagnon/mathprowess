@@ -1,13 +1,24 @@
 {
+  "title": "CPU Usage",
+  "timezone": "browser",
+  "schemaVersion": 38,
+  "version": 1,
   "panels": [
     {
-      "title": "CPU Usage",
       "type": "timeseries",
+      "title": "CPU Usage",
+      "datasource": "Prometheus",
       "targets": [
         {
-          "expr": "100 - (avg(rate(node_cpu_seconds_total{mode=\"idle\"}[1m])) * 100)"
+          "expr": "100 - (avg by(instance)(rate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)"
         }
-      ]
+      ],
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 8
+      }
     }
   ]
 }

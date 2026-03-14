@@ -1,13 +1,23 @@
 {
+  "title": "Network Traffic",
+  "timezone": "browser",
+  "schemaVersion": 38,
+  "version": 1,
   "panels": [
     {
-      "title": "Network Traffic",
       "type": "timeseries",
+      "title": "Network Receive Rate",
       "targets": [
         {
           "expr": "rate(node_network_receive_bytes_total[1m])"
         }
-      ]
+      ],
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 8
+      }
     }
   ]
 }
