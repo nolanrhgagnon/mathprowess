@@ -13,7 +13,7 @@ done
 
 python manage.py collectstatic --noinput
 
-cd /app/django_static/
-touch robots.txt
+touch /app/django_static/robots.txt
+echo -e "User-agent: *\nAllow: /\n\nSitemap: https://mathprowess.com/sitemap.xml" > /app/django_static/robots.txt
 
 gunicorn config.wsgi --bind 0.0.0.0:8000 --workers 4 --threads 4
