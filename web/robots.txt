@@ -1,0 +1,4 @@
+iUser-agent: *
+Allow: /
+
+Sitemap: https://mathprowess.com/sitemap.xml

@@ -10,6 +10,7 @@ RUN npm run build
 
 FROM nginx:1.24-bullseye
 COPY --from=build /app/fe/dist /usr/share/nginx/html
+COPY ./robots.txt /usr/share/nginx/html/
 RUN rm /etc/nginx/conf.d/default.conf
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 CMD ["nginx", "-g", "daemon off;"]
