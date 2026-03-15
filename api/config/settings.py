@@ -129,6 +129,7 @@ USE_TZ = True
 
 
 STATIC_URL = "/django_static/"
+STATICFILES_DIRS = [BASE_DIR / "django_static"]
 STATIC_ROOT = BASE_DIR / "django_static"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 MEDIA_URL = "/media/"

@@ -13,4 +13,7 @@ done
 
 python manage.py collectstatic --noinput
 
+cd /app/django_static/
+touch robots.txt
+
 gunicorn config.wsgi --bind 0.0.0.0:8000 --workers 4 --threads 4
