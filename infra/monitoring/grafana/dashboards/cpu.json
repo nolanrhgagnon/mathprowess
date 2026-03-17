@@ -1,5 +1,5 @@
 {
-  "title": "CPU Usage",
+  "title": "Server Stats",
   "timezone": "browser",
   "schemaVersion": 38,
   "version": 1,
@@ -8,6 +8,32 @@
       "type": "timeseries",
       "fieldConfig": {
         "defaults": {
+            "displayName": "network traffic",
+            "color": {
+                "mode": "fixed",
+                "fixedColor": "yellow"
+            }
+        },
+        "overrides": []
+      },
+      "title": "Network Receive Rate",
+      "targets": [
+        {
+          "expr": "rate(node_network_receive_bytes_total[1m])"
+        }
+      ],
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 8
+      }
+    },
+    {
+      "type": "timeseries",
+      "fieldConfig": {
+        "defaults": {
+            "displayName": "cpu",
             "color": {
                 "mode": "fixed",
                 "fixedColor": "cyan"
