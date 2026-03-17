@@ -6,6 +6,15 @@
   "panels": [
     {
       "type": "timeseries",
+      "fieldConfig": {
+        "defaults": {
+            "color": {
+                "mode": "fixed",
+                "fixedColor": "cyan"
+            }
+        },
+        "overrides": []
+      },
       "title": "CPU Usage",
       "datasource": "Prometheus",
       "targets": [
