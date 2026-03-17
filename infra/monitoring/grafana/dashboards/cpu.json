@@ -5,6 +5,39 @@
   "version": 1,
   "panels": [
     {
+      "id": 99,
+      "type": "histogram",
+      "title": "Transaction Latency",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms",
+          "displayName": "Latency (ms)",
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "#FF5733"
+          }
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "node_transactions_latency_ms"
+        }
+      ],
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 12,
+        "h": 8
+      },
+      "options": {
+        "showLegend": true,
+        "showHistogram": true,
+        "bucketSize": 5
+      }
+    },
+    {
       "type": "timeseries",
       "fieldConfig": {
         "defaults": {
