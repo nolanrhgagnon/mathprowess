@@ -10,6 +10,7 @@ from rest_framework.decorators import permission_classes
 
 from .models import Consultation, Prospect
 from .serializers import ConsultationSerializer, ProspectSerializer
+from .metrics import endpoint_hits
 
 
 class ConsultationList(ListAPIView):
@@ -49,5 +50,12 @@ def create_consultation(request):
     consultation = Consultation.objects.create(
         prospect=prospect, message=message, slug=slug
     )
+    response = Response({"test": "test"})
 
-    return Response({"test": "test"})
+    endpoint_hits.labels(
+        endpoint='/api/consultations/create/',
+        method=request.method,
+        status=response.status_code
+    ).inc()
+
+    return response
