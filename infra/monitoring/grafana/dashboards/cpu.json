@@ -63,7 +63,21 @@
       }
     },
     {
+      "type": "timeseries",
+      "title": "CPU Usage",
+      "fieldConfig": {
+        "defaults": {
+            "min": 0,
+            "max": 100,
+            "displayName": "cpu"
+        }
+      },
+      "overrides": []
+    },
+    {
       "type": "gauge",
+      "title": "CPU Usage",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
             "unit": "percent",
@@ -81,8 +95,6 @@
         },
         "overrides": []
       },
-      "title": "CPU Usage",
-      "datasource": "Prometheus",
       "targets": [
         {
           "expr": "100 - (avg by(instance)(rate(node_cpu_seconds_total{mode=\"idle\"}[1m])) * 100)"
