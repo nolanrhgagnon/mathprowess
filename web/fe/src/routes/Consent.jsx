@@ -61,7 +61,7 @@ export default function ConsentPage() {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center px-4">
+        <div className="min-h-screen flex items-center justify-center px-4 bg-blue-500">
             <div className="bg-white rounded-2xl shadow-md p-10 max-w-md w-full">
                 <h1 className="text-2xl font-bold text-gray-900 mb-4">Message Opt-In</h1>
                 <p className="text-sm text-gray-500 leading-relaxed mb-6">
