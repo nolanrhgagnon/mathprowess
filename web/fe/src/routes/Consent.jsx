@@ -49,13 +49,11 @@ export default function ConsentPage() {
 
     if (submitted) {
         return (
-            <div style={styles.container}>
-                <div style={styles.card}>
-                    <h2 style={styles.title}>You're opted in!</h2>
-                    <p style={styles.text}>
-                        Thank you. You'll receive automated messages via
-                        WhatsApp at the number you provided. Reply STOP at any
-                        time to opt out.
+            <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+                <div className="bg-white rounded-2xl shadow-md p-10 max-w-md w-full">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-4">You're opted in!</h2>
+                    <p className="text-sm text-gray-500 leading-relaxed">
+                        Thank you. You'll receive automated messages via WhatsApp at the number you provided. Reply STOP at any time to opt out.
                     </p>
                 </div>
             </div>
@@ -63,18 +61,15 @@ export default function ConsentPage() {
     }
 
     return (
-        <div style={styles.container}>
-            <div style={styles.card}>
-                <h1 style={styles.title}>Message Opt-In</h1>
-                <p style={styles.text}>
-                    By signing up, you agree to receive automated homework,
-                    session summaries, and course materials via WhatsApp from
-                    Math Prowess. Message frequency varies. Reply STOP to
-                    unsubscribe at any time.
+        <div className="min-h-screen flex items-center justify-center px-4">
+            <div className="bg-white rounded-2xl shadow-md p-10 max-w-md w-full">
+                <h1 className="text-2xl font-bold text-gray-900 mb-4">Message Opt-In</h1>
+                <p className="text-sm text-gray-500 leading-relaxed mb-6">
+                    By signing up, you agree to receive automated homework, session summaries, and course materials via WhatsApp from Math Prowess. Message frequency varies. Reply STOP to unsubscribe at any time.
                 </p>
 
                 <input
-                    style={styles.input}
+                    className="w-full px-4 py-3 mb-4 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
                     type="text"
                     name="name"
                     placeholder="Full Name *"
@@ -83,7 +78,7 @@ export default function ConsentPage() {
                 />
 
                 <input
-                    style={styles.input}
+                    className="w-full px-4 py-3 mb-4 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
                     type="tel"
                     name="phone"
                     placeholder="WhatsApp Phone Number (with country code) *"
@@ -92,7 +87,7 @@ export default function ConsentPage() {
                 />
 
                 <input
-                    style={styles.input}
+                    className="w-full px-4 py-3 mb-6 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
                     type="email"
                     name="email"
                     placeholder="Email (optional)"
@@ -100,28 +95,24 @@ export default function ConsentPage() {
                     onChange={handleChange}
                 />
 
-                <div style={styles.checkboxRow}>
+                <div className="flex items-start gap-3 mb-6">
                     <input
                         type="checkbox"
                         name="consent"
                         id="consent"
                         checked={formData.consent}
                         onChange={handleChange}
+                        className="mt-1 accent-gray-900"
                     />
-                    <label htmlFor="consent" style={styles.checkboxLabel}>
-                        I agree to receive automated WhatsApp messages from Math
-                        Prowess. I understand I can opt out at any time by
-                        replying STOP.
+                    <label htmlFor="consent" className="text-xs text-gray-500 leading-relaxed">
+                        I agree to receive automated WhatsApp messages from Math Prowess. I understand I can opt out at any time by replying STOP.
                     </label>
                 </div>
 
                 <button
-                    style={{
-                        ...styles.button,
-                        opacity: loading ? 0.7 : 1,
-                    }}
                     onClick={handleSubmit}
                     disabled={loading}
+                    className={`w-full py-4 bg-gray-900 text-white text-base font-semibold rounded-lg transition-opacity ${loading ? 'opacity-60 cursor-not-allowed' : 'hover:opacity-90'}`}
                 >
                     {loading ? 'Submitting...' : 'Opt In'}
                 </button>
@@ -129,65 +120,3 @@ export default function ConsentPage() {
         </div>
     );
 }
-
-const styles = {
-    container: {
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#f5f5f5',
-        padding: '20px',
-    },
-    card: {
-        backgroundColor: '#fff',
-        borderRadius: '12px',
-        padding: '40px',
-        maxWidth: '480px',
-        width: '100%',
-        boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
-    },
-    title: {
-        fontSize: '24px',
-        fontWeight: '700',
-        marginBottom: '16px',
-        color: '#111',
-    },
-    text: {
-        fontSize: '14px',
-        color: '#555',
-        marginBottom: '24px',
-        lineHeight: '1.6',
-    },
-    input: {
-        width: '100%',
-        padding: '12px',
-        marginBottom: '16px',
-        borderRadius: '8px',
-        border: '1px solid #ddd',
-        fontSize: '14px',
-        boxSizing: 'border-box',
-    },
-    checkboxRow: {
-        display: 'flex',
-        alignItems: 'flex-start',
-        gap: '10px',
-        marginBottom: '24px',
-    },
-    checkboxLabel: {
-        fontSize: '13px',
-        color: '#444',
-        lineHeight: '1.5',
-    },
-    button: {
-        width: '100%',
-        padding: '14px',
-        backgroundColor: '#111',
-        color: '#fff',
-        border: 'none',
-        borderRadius: '8px',
-        fontSize: '16px',
-        fontWeight: '600',
-        cursor: 'pointer',
-    },
-};
