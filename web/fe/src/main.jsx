@@ -7,6 +7,7 @@ import Tutorials from './routes/Tutorials';
 import About from './routes/About';
 import Merchandise from './routes/Merchandise';
 import Root from './routes/Root';
+import Consent from './routes/Consent';
 import './index.css';
 
 const router = createBrowserRouter([
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
             {
                 path: 'merchandise',
                 element: <Merchandise />,
+            },
+            {
+                path: 'consent',
+                element: <Consent />,
             },
         ],
     },
